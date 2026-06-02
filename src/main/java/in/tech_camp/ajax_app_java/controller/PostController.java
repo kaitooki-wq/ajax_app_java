@@ -28,7 +28,7 @@ public class PostController {
 
   @PostMapping("/posts")
   public String savePost(@ModelAttribute("postForm") PostForm form){
-    PostEntity post = new PostEntity();
+    System.out.println("メソッド呼び出し：" + form);
     post.setContent(form.getContent());
     postRepository.insert(post);
     return "redirect:/";
