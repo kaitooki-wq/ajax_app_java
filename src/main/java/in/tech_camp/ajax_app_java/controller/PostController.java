@@ -1,5 +1,6 @@
 package in.tech_camp.ajax_app_java.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,11 +28,15 @@ public class PostController {
 
 
   @PostMapping("/posts")
-  public String savePost(@ModelAttribute("postForm") PostForm form){
+  public ResponseEntity<PostEntity> savePost(@ModelAttribute("postForm") PostForm form){
     System.out.println("メソッド呼び出し：" + form);
+
+    PostEntity post = new PostEntity();
     post.setContent(form.getContent());
     postRepository.insert(post);
-    return "redirect:/";
+    PostEntity resultPost = postRepository.findById(post.getId());
+    System.out.println(resultPost);
+    return ResponseEntity.ok(resultPost);
   }
   
 } 
